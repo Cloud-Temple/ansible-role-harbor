@@ -41,7 +41,8 @@
   become: yes
 
 - name: "Downloading Harbor {{ harbor_version }} (offline installer)"
-  get_url: url={{ harbor_url }} dest=/tmp/harbor.tgz validate_certs=no
+  get_url: url={{ harbor_url }} dest=/tmp/harbor.tgz validate_certs=no force=true
+  
 
 - name: "Creating Harbor parent directory... ({{ harbor_install_dir }})"
   file:
