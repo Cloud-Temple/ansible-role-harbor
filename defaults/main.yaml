@@ -67,6 +67,16 @@ harbor_registries: []
 #      access_key: "key"
 #      access_secret: "secret"
 
+harbor_proxy_cache_projects: []
+#  - project_name: test
+#    registry_name: test
+#    storage_limit: 2048
+#    is_public: true
+#    content_trust: false
+#    prevent_vul: false
+#    severity: high
+#    auto_scan: true"
+
 # Example to create project on install
 harbor_projects: []
 #  - project_name: test

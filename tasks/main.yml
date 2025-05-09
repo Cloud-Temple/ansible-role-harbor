@@ -108,6 +108,39 @@
   register: response
   changed_when: response.status == 201
 
+- name: Get registries
+  uri:
+    url: "{{ harbor_api_url }}/registries?q=name={{ item.registry_name | urlencode }}"
+    method: GET
+    user: "admin"
+    password: "{{ harbor_admin_password }}"
+    status_code:
+      - 200
+    force_basic_auth: yes
+    validate_certs: "{{ harbor_validate_certs | bool }}"
+  with_items: "{{ harbor_proxy_cache_projects }}"
+  register: registries
+
+- name: Creating proxy cache projects
+  uri:
+    url: "{{ harbor_api_url }}/projects"
+    method: post
+    user: "admin"
+    password: "{{ harbor_admin_password }}"
+    status_code:
+      - 201
+      - 409 # already created
+    body_format: json
+    force_basic_auth: yes
+    return_content: yes
+    body: "{{ lookup('template', 'templates/create_proxy_cache_project.yml.j2') | from_yaml }}"
+    validate_certs: "{{ harbor_validate_certs | bool }}"
+  loop: "{{ registries.results }}"
+  loop_control:
+    label: "{{ item.item }}"
+  register: response
+  changed_when: response.status == 201
+
 - name: Creating projects
   uri:
     url: "{{ harbor_api_url }}/projects"

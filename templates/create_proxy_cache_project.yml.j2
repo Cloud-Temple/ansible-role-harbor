@@ -1,0 +1,12 @@
+{% set _project = item.item %}
+project_name: "{{ _project.project_name }}"
+{% if _project.storage_limit is defined %}
+storage_limit: {{ _project.storage_limit | int }}
+{% endif %}
+registry_id: {{ item.json[0].id | int }}
+metadata:
+  public: "{{ _project.is_public | default(true) | bool | lower }}"
+  enable_content_trust: "{{ _project.content_trust | default(false) | bool | lower }}"
+  prevent_vul: "{{ _project.prevent_vul | default(true) | bool | lower }}"
+  severity: "{{ _project.severity | default('high') }}"
+  auto_scan: "{{ _project.auto_scan | default(true) | bool | lower }}"
