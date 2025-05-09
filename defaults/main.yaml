@@ -58,6 +58,10 @@ harbor_api_port: "{% if harbor_url_protocol == 'http' %}{{harbor_exposed_http_po
 # If you are running Harbor behind your own proxy, override this as it might not match with Harbor.cfg values.
 harbor_api_url: "{{ harbor_url_protocol }}://{{ harbor_hostname }}:{{ harbor_api_port }}/api/v2.0"
 
+harbor_system_configurations: {}
+#  project_creation_restriction: "adminonly"
+#  robot_name_prefix: "robot_"
+
 harbor_registries: []
 #  - name: example
 #    url: "https://example.com"

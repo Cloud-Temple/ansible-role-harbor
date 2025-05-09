@@ -90,6 +90,21 @@
   become: yes
   when: config is changed or overrides is changed
 
+- name: Updating system configurations
+  uri:
+    url: "{{ harbor_api_url }}/configurations"
+    method: put
+    user: "admin"
+    password: "{{ harbor_admin_password }}"
+    status_code:
+      - 200
+    body_format: json
+    force_basic_auth: yes
+    return_content: yes
+    body: "{{ harbor_system_configurations }}"
+    validate_certs: "{{ harbor_validate_certs | bool }}"
+  when: harbor_system_configurations | length > 0
+
 - name: Creating registries
   uri:
     url: "{{ harbor_api_url }}/registries"
