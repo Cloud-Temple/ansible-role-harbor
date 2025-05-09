@@ -90,6 +90,24 @@
   become: yes
   when: config is changed or overrides is changed
 
+- name: Creating registries
+  uri:
+    url: "{{ harbor_api_url }}/registries"
+    method: post
+    user: "admin"
+    password: "{{ harbor_admin_password }}"
+    status_code:
+      - 201
+      - 409 # already created
+    body_format: json
+    force_basic_auth: yes
+    return_content: yes
+    body: "{{ lookup('template', 'templates/create_registry.yml.j2') | from_yaml }}"
+    validate_certs: "{{ harbor_validate_certs | bool }}"
+  with_items: "{{ harbor_registries }}"
+  register: response
+  changed_when: response.status == 201
+
 - name: Creating projects
   uri:
     url: "{{ harbor_api_url }}/projects"

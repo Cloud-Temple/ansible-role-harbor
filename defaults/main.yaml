@@ -58,6 +58,15 @@ harbor_api_port: "{% if harbor_url_protocol == 'http' %}{{harbor_exposed_http_po
 # If you are running Harbor behind your own proxy, override this as it might not match with Harbor.cfg values.
 harbor_api_url: "{{ harbor_url_protocol }}://{{ harbor_hostname }}:{{ harbor_api_port }}/api/v2.0"
 
+harbor_registries: []
+#  - name: example
+#    url: "https://example.com"
+#    type: docker-registry # GET /api/v2.0/replication/adapters
+#    insecure: true
+#    credential:
+#      access_key: "key"
+#      access_secret: "secret"
+
 # Example to create project on install
 harbor_projects: []
 #  - project_name: test

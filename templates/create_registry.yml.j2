@@ -1,0 +1,13 @@
+name: "{{ item.name }}"
+{% if item.description is defined %}
+description: "{{ item.description }}"
+{% endif %}
+url: "{{ item.url }}"
+type: "{{ item.type }}"
+insecure: {{ item.insecure | default(false) | bool }}
+{% if item.credential is defined %}
+credential:
+  type: "{{ item.credential.type | default('basic') }}"
+  access_key: "{{ item.credential.access_key }}"
+  access_secret: "{{ item.credential.access_secret }}"
+{% endif %}
