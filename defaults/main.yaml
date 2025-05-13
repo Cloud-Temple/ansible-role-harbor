@@ -100,5 +100,49 @@ harbor_roles: []
 #    project_name: test
 #    role_id: 2
 
+harbor_robot_accounts: []
+#  - name: test
+#    description: "example"
+#    level: system
+#    duration: -1
+#    permissions:
+#      - kind: "system"
+#        namespace: "/"
+#        access:
+#          - action: "read"
+#            resource: "registry"
+#          - action: "list"
+#            resource: "registry"
+#          - action: "list"
+#            resource: "project"
+#  - name: robot
+#    level: system
+#    duration: 90
+#    permissions:
+#      - access:
+#          - action: "list"
+#            resource: "tag"
+#          - action: "list"
+#            resource: "repository"
+#        kind: "project"
+#        namespace: "test"
+#      - access:
+#          - action: "list"
+#            resource: "tag"
+#          - action: "list"
+#            resource: "repository"
+#        kind: "project"
+#        namespace: "test2"
+#  - name: robot
+#    level: project
+#    permissions:
+#      - access:
+#          - action: "list"
+#            resource: "tag"
+#          - action: "list"
+#            resource: "repository"
+#        kind: "project"
+#        namespace: "test"
+
 harbor_installer_with: "{% for e in harbor_extras %} {{ '--with-%s'|format(e) }} {% endfor %}"
 harbor_validate_certs: true

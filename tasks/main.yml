@@ -226,3 +226,22 @@
     label: "{{ item.item }}"
   register: response
   changed_when: response.status == 201
+
+- name: Creating robot accounts
+  uri:
+    url: "{{ harbor_api_url }}/robots"
+    method: POST
+    user: "admin"
+    password: "{{ harbor_admin_password }}"
+    status_code:
+      - 201
+      - 409 # already created
+    body_format: json
+    force_basic_auth: yes
+    return_content: yes
+    body: "{{ lookup('template', 'templates/create_robot_account.yml.j2') | from_yaml }}"
+    validate_certs: "{{ harbor_validate_certs | bool }}"
+  with_items: "{{ harbor_robot_accounts }}"
+  register: harbor_robot_accounts_response
+  changed_when: harbor_robot_accounts_response.status == 201
+  no_log: "{{ harbor_robot_accounts_no_log | default(true) | bool }}"

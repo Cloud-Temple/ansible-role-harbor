@@ -1,0 +1,13 @@
+name: "{{ item.name }}"
+{% if item.description is defined %}
+description: "{{ item.description }}"
+{% endif %}
+{% if item.secret is defined %}
+secret: {{ item.secret | quote }}
+{% endif %}
+level: "{{ item.level }}"
+{% if item.disable is defined %}
+disable: {{ item.disable }}
+{% endif %}
+duration: {{ item.duration | default(30) | int }}
+permissions: {{ item.permissions }}
